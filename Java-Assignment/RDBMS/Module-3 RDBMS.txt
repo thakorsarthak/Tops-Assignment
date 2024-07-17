@@ -1,0 +1,93 @@
+Q.01 Select unique job from EMP table
+Query : SELECT DISTINCT job FROM tbl_employee;
+
+Q.02 List the details of the emps in asc order of the Dptnos and desc of Jobs?
+Query : SELECT * FROM tbl_employee ORDER BY deptno ASC, job DESC;
+
+Q.03 Display all the unique job groups in the descending order?
+Query : SELECT DISTINCT job FROM tbl_employee ORDER BY job DESC;
+
+Q.04 List the emps who joined before 1981?
+Query : SELECT * FROM tbl_employee WHERE year(hiredata) < 1981;
+
+Q.05 List the Empno, Ename, Sal, Daily sal of all emps in the asc order of Annsal?
+Query : SELECT Empno,Ename,Sal FROM tbl_employee ORDER BY Sal ASC;
+
+Q.06 List the Empno, Ename, Sal, Exp of all emps working for Mgr 7369?
+Query : 
+
+Q.07 Display all the details of the emps who’s Comm. Is more than their Sal?
+Query : SELECT * FROM tbl_employee WHERE Comm > Sal;
+
+Q.08 List the emps who are either ‘CLERK’ or ‘ANALYST’ in the Desc order?
+Query : SELECT * FROM tbl_employee WHERE job='CLERK' OR job='ANALYST' ORDER BY job DESC;
+
+Q.09 List the emps Who Annual sal ranging from 22000 and 45000?
+Query : SELECT * FROM tbl_employee WHERE 12*sal BETWEEN 24000 AND 50000;
+
+Q.10 List the Enames those are starting with ‘S’ and with five characters?
+Query : SELECT ename FROM tbl_employee WHERE ename LIKE 'S_ _ _ ';
+
+Q.11 List the emps whose Empno not starting with digit78?
+Query : SELECT * FROM tbl_employee WHERE NOT Empno LIKE "78%";
+
+Q.12 List all the Clerks of Deptno 20?
+Query : SELECT * FROM tbl_employee WHERE Job="CLERK" AND Deptno=20;
+
+Q.13 List the Emps who are senior to their own MGRS?
+Query : SELECT * FROM tbl_employee w, tbl_employee m WHERE w.mgr = m.empno AND w.hiredate < m.hiredate;
+
+Q.14 List the Emps of Deptno 20 who’s Jobs are same as Deptno 10?
+Query :select e1,ename as empname e1.job,e2,ename
+	as empname e2.job as job from tbl_employee on e1.job=e2.job where e1.deptno= 20 and e2.deptno=10;
+
+Q.15 List the Emps who’s Sal is same as FORD or SMITH in desc order of Sal?
+Query : SELECT * FROM tbl_employee WHERE ename="Ford" OR ename="SMITH" ORDER BY sal DESC;
+
+Q.16 List the emps whose jobs same as SMITH or ALLEN?
+Query : SELECT * FROM tbl_employee WHERE job in ('CLERK','SALESMAN');
+
+Q.17 Any jobs of deptno 10 those that are not found in deptno 20?
+Query : select job from tbl_employee where deptno=10 and job not in (select job from tbl_employee where deptno=20;)
+
+Q.18 Find the highest sal of EMP table?
+Query : SELECT MAX(Sal) FROM tbl_employee;
+
+Q.19 Find details of highest paid employee?
+Query : SELECT * FROM tbl_employee WHERE sal IN (SELECT max(sal) FROM tbl_employee);
+
+Q.20 Find the total sal given to the MGR?
+Query : SELECT SUM(sal) FROM tbl_employee WHERE job = 'MANAGER';
+
+Q.21 List the emps whose names contains ‘A’?
+Query : SELECT * FROM tbl_employee WHERE ename LIKE "A%";
+
+Q.22 Find all the emps who earn the minimum Salary for each job wise in ascending order?
+Query : SELECT * MIN(sal) FROM tbl_employee GROUP BY job ORDER BY sal ASC;
+
+Q.23 List the emps whose sal greater than Blake’s sal?
+Query : SELECT * FROM tbl_employee WHERE sal > (SELECT sal FROM tbl_employee WHERE ename="BLAKE");
+
+Q.24 Create view v1 to select ename, job, dname, loc whose deptno are same?
+Query : CREATE VIEW v1 ASSELECT e.ename, e.job, d.dname, d.loc
+	FROM tbl_employee e
+	JOIN tbl_dept d ON e.deptno = d.deptno;
+
+Q.25 Create a procedure with dno as input parameter to fetch ename and dname?
+Query : DELIMITER //
+CREATE PROCEDURE GetEmployeeAndDepartment(IN dno INT)
+BEGIN
+    SELECT ename, dname
+    FROM tbl_employee
+    JOIN tbl_dept ON tbl_employee.deptno = tbl_dept.deptno
+    WHERE tbl_employee.deptno = dno;
+END //
+DELIMITER ;
+
+Q.26 Add column Pin with bigint data type in table student?
+Query : ALTER TABLE tbl_student ADD COLUMN Pin BIGINT;
+
+Q.27 Modify the student table to change the sname length from 14 to 40. Create 
+trigger to insert data in emp_log table whenever any update of sal in EMP table. 
+You can set action as ‘New Salary’?
+Query : ALTER TABLE tbl_student MODIFY Sname VARCHAR(40);
